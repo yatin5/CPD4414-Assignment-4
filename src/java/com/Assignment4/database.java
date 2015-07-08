@@ -24,7 +24,7 @@ public class database {
             String user = "root";
             String pass = "";
             conn = DriverManager.getConnection(jdbc, user, pass);
-            String query = "SELECT * FROM product";
+            //String query = "SELECT * FROM product";
 
         } catch (ClassNotFoundException | SQLException ex) {
             System.err.println("No class found Exception" + ex.getMessage());

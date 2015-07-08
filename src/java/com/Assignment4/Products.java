@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package com.Assignment4;
-
+import static com.Assignment4.database.getConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -34,12 +38,24 @@ public class Products {
     /**
      * Retrieves representation of an instance of com.Assignment4.Products
      * @return an instance of java.lang.String
+     * @throws java.sql.SQLException
      */
     @GET
     @Produces("application/json")
-    public String getJson() {
+    public String getJson() throws SQLException {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
+       // throw new UnsupportedOperationException();
+       Connection conn = getConnection();
+       String query = "select * from product";
+       Statement s = conn.createStatement();
+       ResultSet result = s.executeQuery(query);
+       
+       if(conn != null){
+          return "connection etablished";
+       }
+       return "NO connection etablished";
+       
+        
     }
 
     /**
