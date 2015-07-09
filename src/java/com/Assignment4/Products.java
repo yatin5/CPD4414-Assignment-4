@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -17,6 +18,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -25,7 +27,8 @@ import javax.ws.rs.PUT;
  */
 @Path("product")
 public class Products {
-
+   Products items = new Products();
+    ArrayList<Products> product = new ArrayList<>();
     @Context
     private UriInfo context;
 
@@ -33,6 +36,11 @@ public class Products {
      * Creates a new instance of Products
      */
     public Products() {
+        
+    }
+
+    private Products(int aInt, String string, String string0, int aInt0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -41,8 +49,9 @@ public class Products {
      * @throws java.sql.SQLException
      */
     @GET
-    @Produces("application/json")
-    public String getJson() throws SQLException {
+    @Path("/product")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Products> getXml() throws SQLException {
         //TODO return proper representation object
        // throw new UnsupportedOperationException();
        Connection conn = getConnection();
@@ -50,12 +59,30 @@ public class Products {
        Statement s = conn.createStatement();
        ResultSet result = s.executeQuery(query);
        
-       if(conn != null){
-          return "connection etablished";
+       while(result.next()){
+           Products items = new Products(result.getInt("ProductId"), result.getString("name"), result.getString("description"), result.getInt("quantity"));
+           product.add(items);
        }
-       return "NO connection etablished";
-       
-        
+         return product;
+       }
+    
+    @GET
+    @Path("/product/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Products> oneProduct(@PathParam("id") int id) throws SQLException
+    {
+        Connection conn = getConnection();
+        Statement s = conn.createStatement();
+        ResultSet rs = s.executeQuery("select * from product where productid="+id);
+
+      
+        while (rs.next()) {
+
+            Products pro = new Products(rs.getInt("productid"), rs.getString("name"), rs.getString("description"), rs.getInt("quantity"));
+            product.add(pro);
+        }
+
+        return product;
     }
 
     /**
