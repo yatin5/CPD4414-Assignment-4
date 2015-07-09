@@ -29,7 +29,7 @@ import org.json.simple.parser.ParseException;
 /**
  * REST Web Service
  *
- * @author HP
+ * @author c06548674
  */
 @Path("/")
 public class Products {
