@@ -73,6 +73,12 @@ public class Products {
        return product;
        }
     
+    /**
+     * returning the data using id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @GET
     @Path("/product/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,7 +97,14 @@ public class Products {
 
         return product;
     }
-   @POST
+
+    /**
+     * converting integer into string and parsing it to jsonobject
+     * @param s returns the query in the and executes the insert query
+     * @throws ParseException
+     * @throws SQLException
+     */
+    @POST
    @Path("/product")
    @Consumes(MediaType.APPLICATION_JSON)
    public void createProducts(String str) throws ParseException, SQLException{
@@ -121,7 +134,6 @@ public class Products {
     /**
      * PUT method for updating or creating an instance of Products
      * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
     @Consumes("application/json")

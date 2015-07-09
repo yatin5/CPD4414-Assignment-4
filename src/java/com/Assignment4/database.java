@@ -15,8 +15,12 @@ import java.sql.SQLException;
  */
 public class database {
     
-    
-     public static Connection getConnection() throws SQLException {
+    /**
+     * created a table in the database for local host database name c0654874 and table product
+     * @return
+     * @throws SQLException
+     */
+    public static Connection getConnection() throws SQLException {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
